@@ -6,9 +6,14 @@ from .models import Shorts
 
 
 def visit_link(request,link):
-	sen=get_object_or_404(Shorts,outgoingurl1=link)
-	sen1=sen.incomingurl
-	return redirect(sen1)
+	try:
+		ob=Shorts.objects.get(outgoingurl1=link)
+	except:
+		ob=None
+	if ob is None:
+		return redirect('http://127.0.0.1:8000')
+	else:
+		return redirect(ob.incomingurl)
 
 
 def short_home(request):
@@ -66,9 +71,9 @@ def short_home(request):
 			qq=1
 
 
-	print(z)
-	print(zz)
-	print(qq)
+	#print(z)
+	#print(zz)
+	#print(qq)
 	context = {
 	 "e":e,
 		"z":z,
